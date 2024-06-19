@@ -80,6 +80,20 @@ public class Solution
 
         return map.Values.ToList();
     }
+    public static int[] TwoSum(int[] nums, int target)
+    {
+        Dictionary<int,int> keyValuePairs = new Dictionary<int,int>();
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int searchResult = target - nums[i];
+            if (keyValuePairs.ContainsKey(searchResult))
+            {
+                return new int[] { keyValuePairs[searchResult],i };
+            }
+            keyValuePairs.TryAdd(nums[i], i);
+        }
+        return null;
+    }
     public static void Main(string[] args)
     {
         int[] nums = { 1,2,3,4,5 };
