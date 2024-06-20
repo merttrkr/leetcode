@@ -99,23 +99,9 @@ public class Solution
 
     public static int[] TopKFrequent(int[] nums, int k)
     {
-        Dictionary<int,int> elementAndCount = new Dictionary<int,int>();
-
-        for(int i = 0; i< nums.Length;i++)
-        {
-            if (elementAndCount.ContainsKey(nums[i]))
-            {
-                elementAndCount[nums[i]]++;
-            }
-            else
-            {
-                elementAndCount.TryAdd(nums[i], 1);
-            }
-        }
-        // Assuming your list is named 'nums'
-        //var elementAndCount = nums.GroupBy(num => num).ToDictionary(group => group.Key, group => group.Count());
-
-        return elementAndCount.OrderByDescending(x => x.Value).Take(k).Select(x => x.Key).ToArray();
+        Dictionary<int,int> result = nums.GroupBy(x => x).ToDictionary(num => num.Key, num => num.Count());
+        return result.OrderByDescending(x => x.Value).Take(k).Select(x => x.Key).ToArray();
+        
     }
     public static void Main(string[] args)
     {
