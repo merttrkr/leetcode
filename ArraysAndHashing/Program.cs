@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace ArraysAndHashing;
 
 public class Solution
@@ -94,6 +96,27 @@ public class Solution
         }
         return null;
     }
+
+    public static int[] TopKFrequent(int[] nums, int k)
+    {
+        Dictionary<int,int> elementAndCount = new Dictionary<int,int>();
+
+        for(int i = 0; i< nums.Length;i++)
+        {
+            if (elementAndCount.ContainsKey(nums[i]))
+            {
+                elementAndCount[nums[i]]++;
+            }
+            else
+            {
+                elementAndCount.TryAdd(nums[i], 1);
+            }
+        }
+        // Assuming your list is named 'nums'
+        //var elementAndCount = nums.GroupBy(num => num).ToDictionary(group => group.Key, group => group.Count());
+
+        return elementAndCount.OrderByDescending(x => x.Value).Take(k).Select(x => x.Key).ToArray();
+    }
     public static void Main(string[] args)
     {
         int[] nums = { 1,2,3,4,5 };
@@ -102,7 +125,13 @@ public class Solution
 
         //Console.WriteLine(ContainsDuplicate(nums));
         //Console.WriteLine(IsAnagram(s, s));
-        GroupAnagrams(strs);
+        //GroupAnagrams(strs);
+        int[] arr = TopKFrequent(new int[] { 1, 1, 1, 2, 2, 3 }, 2);
+        foreach (var item in arr)
+        {
+            Console.WriteLine(item);
+        }
+
 
 
     }
