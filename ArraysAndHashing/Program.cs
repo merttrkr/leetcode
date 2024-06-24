@@ -103,23 +103,81 @@ public class Solution
         return result.OrderByDescending(x => x.Value).Take(k).Select(x => x.Key).ToArray();
         
     }
+    public static string Encode(IList<string> strs)
+    {
+        return string.Join("", strs.Select(str => str + str.Length));
+    }
+
+    public static List<string> Decode(string s)
+    {
+        List<string> result = new List<string>();
+        StringBuilder sb = new StringBuilder();
+        foreach (char c in s)
+        {
+            if (Char.IsDigit(c))
+            {
+                result.Add(sb.ToString());
+                sb.Clear();
+            }
+            else
+            {
+                sb.Append(c);
+            }
+        }
+        return result;
+    }
+
+    public static int[] ProductExceptSelf(int[] nums)
+    {
+
+        int length = nums.Length;
+        int[] result = new int[length];
+        int temp = 1;
+
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = temp;
+            temp *= nums[i];
+        }
+
+        temp = 1;
+        for (int j = length - 1; j >= 0; j--)
+        {
+            result[j] *= temp;
+            temp *= nums[j];
+        }
+        return result;
+    }
     public static void Main(string[] args)
     {
-        int[] nums = { 1,2,3,4,5 };
+        int[] nums = { 1,2,3,4};
         string s = "ana";
         string[] strs = { "eat", "tea", "tan", "ate", "nat", "bat" };
 
         //Console.WriteLine(ContainsDuplicate(nums));
+
         //Console.WriteLine(IsAnagram(s, s));
+
         //GroupAnagrams(strs);
-        int[] arr = TopKFrequent(new int[] { 1, 1, 1, 2, 2, 3 }, 2);
+
+        //int[] arr = TopKFrequent(new int[] { 1, 1, 1, 2, 2, 3 }, 2);
+        //foreach (var item in arr)
+        //{
+        //    Console.WriteLine(item);
+        //}
+
+        //Console.WriteLine(Encode(new List<string> {"test","top","ecemmert" }));
+
+        //List<string> strArr = Decode(Encode(new List<string> { "test", "top", "ecemmert" }));
+        //foreach (var item in strArr)
+        //{
+        //    Console.WriteLine(item);
+        //}
+        int[] arr= ProductExceptSelf(nums);
         foreach (var item in arr)
         {
             Console.WriteLine(item);
         }
-
-
-
     }
 
 }
