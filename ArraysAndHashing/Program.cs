@@ -11,7 +11,7 @@ public class Solution
 {
     public static bool ContainsDuplicate(int[] nums)
     {
-        Dictionary<int,int> dict = new Dictionary<int, int>();
+        Dictionary<int,int> dict = new();
         foreach (int num in nums)
         {
             if (dict.ContainsKey(num))
@@ -27,7 +27,7 @@ public class Solution
         if (s.Length != t.Length)
             return false;
 
-        Dictionary<char, int> charCount = new Dictionary<char, int>();
+        Dictionary<char, int> charCount = new();
 
         // Count characters in the first string
         foreach (char c in s)
@@ -148,6 +148,31 @@ public class Solution
         }
         return result;
     }
+    public static bool IsValidSudoku(char[][] board)
+    {
+        int square=(int)Math.Sqrt(board.Length);
+
+        HashSet <string> row = new ();
+
+        for (int i = 0; i < board.Length;i++)
+        {
+            for (int j = 0; j < board[i].Length; j++)
+            {
+                char number = board[i][j];
+                if (char.IsDigit(number))
+                {
+                    if (!row.Add(number + "r"+i) || 
+                        !row.Add(number +"c"+j)  || 
+                        !row.Add(number +" b "+ i / square + "-" + j / square))
+                    {
+                        return false;
+                    }
+
+                }
+            }
+        }
+        return true;
+    }
     public static void Main(string[] args)
     {
         int[] nums = { 1,2,3,4};
@@ -173,11 +198,24 @@ public class Solution
         //{
         //    Console.WriteLine(item);
         //}
-        int[] arr= ProductExceptSelf(nums);
-        foreach (var item in arr)
-        {
-            Console.WriteLine(item);
-        }
+
+        //int[] arr= ProductExceptSelf(nums);
+        //foreach (var item in arr)
+        //{
+        //    Console.WriteLine(item);
+        //}
+        char[][] validBoard = new char[][] {
+        new char[] {'9', '3', '.', '.', '7', '.', '.', '.', '.'},
+        new char[] {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+        new char[] {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+        new char[] {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+        new char[] {'4', '.', '.', '8', '.', '.', '.', '1', '.'},
+        new char[] {'7', '.', '.', '.', '2', '.', '.', '.', '5'},
+        new char[] {'.', '.', '.', '.', '.', '.', '.', '.', '9'},
+        new char[] {'.', '.', '.', '.', '.', '.', '4', '.', '.'},
+        new char[] {'.', '.', '.', '.', '.', '.', '.', '.', '1'}
+        };
+        Console.WriteLine(IsValidSudoku(validBoard));
     }
 
 }
