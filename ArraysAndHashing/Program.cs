@@ -173,6 +173,59 @@ public class Solution
         }
         return true;
     }
+    public static int LongestConsecutive(int[] nums)
+    {
+        if (nums == null || nums.Length == 0) return 0;
+
+        int[] sortedNums = nums.OrderBy(x => x).ToArray();
+        Dictionary<int, int> valueAndConsequence= new();
+
+        for(int i = 0; i < sortedNums.Length; i++)
+        {
+            int previousValue = 0;
+
+            if (valueAndConsequence.TryGetValue(sortedNums[i] - 1, out previousValue))
+            {
+                
+                valueAndConsequence.TryAdd(sortedNums[i], previousValue+1);
+            }
+            else
+            {
+                valueAndConsequence.TryAdd(sortedNums[i], 1);
+            }
+        }
+
+
+        return valueAndConsequence.Values.Max();
+    }
+    public static int LongestConsecutiveHashset(int[] nums)
+    {
+        if (nums == null || nums.Length == 0) return 0;
+
+        HashSet<int> numSet = new HashSet<int>(nums);
+        int longestStreak = 0;
+
+        foreach (int num in numSet)
+        {
+            // Only start a sequence if `num-1` is not in the set
+            if (!numSet.Contains(num - 1))
+            {
+                int currentNum = num;
+                int currentStreak = 1;
+
+                while (numSet.Contains(currentNum + 1))
+                {
+                    currentNum++;
+                    currentStreak++;
+                }
+
+                longestStreak = Math.Max(longestStreak, currentStreak);
+            }
+        }
+
+        return longestStreak;
+    }
+
     public static void Main(string[] args)
     {
         int[] nums = { 1,2,3,4};
@@ -204,18 +257,23 @@ public class Solution
         //{
         //    Console.WriteLine(item);
         //}
-        char[][] validBoard = new char[][] {
-        new char[] {'9', '3', '.', '.', '7', '.', '.', '.', '.'},
-        new char[] {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-        new char[] {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-        new char[] {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-        new char[] {'4', '.', '.', '8', '.', '.', '.', '1', '.'},
-        new char[] {'7', '.', '.', '.', '2', '.', '.', '.', '5'},
-        new char[] {'.', '.', '.', '.', '.', '.', '.', '.', '9'},
-        new char[] {'.', '.', '.', '.', '.', '.', '4', '.', '.'},
-        new char[] {'.', '.', '.', '.', '.', '.', '.', '.', '1'}
-        };
-        Console.WriteLine(IsValidSudoku(validBoard));
+        //char[][] validBoard = new char[][] {
+        //new char[] {'9', '3', '.', '.', '7', '.', '.', '.', '.'},
+        //new char[] {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+        //new char[] {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+        //new char[] {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+        //new char[] {'4', '.', '.', '8', '.', '.', '.', '1', '.'},
+        //new char[] {'7', '.', '.', '.', '2', '.', '.', '.', '5'},
+        //new char[] {'.', '.', '.', '.', '.', '.', '.', '.', '9'},
+        //new char[] {'.', '.', '.', '.', '.', '.', '4', '.', '.'},
+        //new char[] {'.', '.', '.', '.', '.', '.', '.', '.', '1'}
+        //};
+        //Console.WriteLine(IsValidSudoku(validBoard));
+        
+        int[] arr = {100,4,200,1,3,2,5 };
+
+        Console.WriteLine(LongestConsecutive(arr)); 
+
     }
 
 }
