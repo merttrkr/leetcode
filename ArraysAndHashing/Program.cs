@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -225,7 +228,28 @@ public class Solution
 
         return longestStreak;
     }
+    public static bool IsPalindrome(string s)
+    {
+        string pattern = @"[^a-zA-Z0-9]";
+        s= Regex.Replace(s, pattern, "").ToLower();
 
+        if (string.IsNullOrEmpty(s)) return true;
+
+        int left = 0;
+        int right = s.Length - 1;
+
+        while (left < right)
+        {
+            if (s[left] != s[right])
+            {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
     public static void Main(string[] args)
     {
         int[] nums = { 1,2,3,4};
@@ -269,10 +293,12 @@ public class Solution
         //new char[] {'.', '.', '.', '.', '.', '.', '.', '.', '1'}
         //};
         //Console.WriteLine(IsValidSudoku(validBoard));
-        
-        int[] arr = {100,4,200,1,3,2,5 };
 
-        Console.WriteLine(LongestConsecutive(arr)); 
+        //int[] arr = {100,4,200,1,3,2,5 };
+
+        //Console.WriteLine(LongestConsecutive(arr)); 
+
+        Console.WriteLine(IsPalindrome("A man, a plan, a canal: Panama")); 
 
     }
 
