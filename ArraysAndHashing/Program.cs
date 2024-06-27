@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -6,7 +7,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ArraysAndHashing;
 
@@ -85,17 +85,18 @@ public class Solution
 
         return map.Values.ToList();
     }
-    public static int[] TwoSum(int[] nums, int target)
+    public static int[] TwoSum(int[] numbers, int target)
     {
-        Dictionary<int,int> keyValuePairs = new Dictionary<int,int>();
-        for (int i = 0; i < nums.Length; i++)
+        HashSet<int> hs = new ();
+
+        for (int i = 0; i < numbers.Length; i++)
         {
-            int searchResult = target - nums[i];
-            if (keyValuePairs.ContainsKey(searchResult))
+            int searchResult = target - numbers[i];
+            if (hs.Contains(searchResult))
             {
-                return new int[] { keyValuePairs[searchResult],i };
+                return new int[] {Array.IndexOf(numbers,searchResult)+1,i+1};
             }
-            keyValuePairs.TryAdd(nums[i], i);
+            hs.Add(numbers[i]);
         }
         return null;
     }
@@ -250,6 +251,22 @@ public class Solution
 
         return true;
     }
+    public static bool IsPalindromeLinq(string s)
+    {
+        string pattern = @"[^a-zA-Z0-9]";
+        s = Regex.Replace(s, pattern, "").ToLower();
+
+        if (string.IsNullOrEmpty(s))
+        {
+            return true; // Empty string is considered a palindrome
+        }
+        return s.SequenceEqual(s.Reverse());
+
+    }
+    //public IList<IList<int>> ThreeSum(int[] nums)
+    //{
+
+    //}
     public static void Main(string[] args)
     {
         int[] nums = { 1,2,3,4};
@@ -298,7 +315,7 @@ public class Solution
 
         //Console.WriteLine(LongestConsecutive(arr)); 
 
-        Console.WriteLine(IsPalindrome("A man, a plan, a canal: Panama")); 
+        Console.WriteLine(IsPalindromeLinq("A man, a plan, a canal: Panama")); 
 
     }
 
