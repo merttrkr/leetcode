@@ -263,10 +263,60 @@ public class Solution
         return s.SequenceEqual(s.Reverse());
 
     }
-    //public IList<IList<int>> ThreeSum(int[] nums)
-    //{
+    public static IList<IList<int>> ThreeSum(int[] nums)
+    {
+        IList<IList<int>> result = new List<IList<int>>();
+        if (nums.Length < 3)
+        {
+            return result;
+        }
 
-    //}
+        Array.Sort(nums);
+        for (int left = 0; left < nums.Length - 2; left++)
+        {
+            if (left > 0 && nums[left] == nums[left - 1])
+            {
+                continue; // Skip duplicates for the left pointer
+            }
+
+            int leftPlus = left + 1;
+            int right = nums.Length - 1;
+
+            while (leftPlus < right)
+            {
+                int sum = nums[left] + nums[leftPlus] + nums[right];
+                if (sum == 0)
+                {
+                    result.Add(new List<int> { nums[left], nums[leftPlus], nums[right] });
+
+                    // Skip duplicates for the leftPlus pointer
+                    while (leftPlus < right && nums[leftPlus] == nums[leftPlus + 1])
+                    {
+                        leftPlus++;
+                    }
+
+                    // Skip duplicates for the right pointer
+                    while (leftPlus < right && nums[right] == nums[right - 1])
+                    {
+                        right--;
+                    }
+
+                    leftPlus++;
+                    right--;
+                }
+                else if (sum < 0)
+                {
+                    leftPlus++;
+                }
+                else
+                {
+                    right--;
+                }
+            }
+        }
+        return result;
+    }
+
     public static void Main(string[] args)
     {
         int[] nums = { 1,2,3,4};
@@ -315,8 +365,11 @@ public class Solution
 
         //Console.WriteLine(LongestConsecutive(arr)); 
 
-        Console.WriteLine(IsPalindromeLinq("A man, a plan, a canal: Panama")); 
+        //Console.WriteLine(IsPalindromeLinq("A man, a plan, a canal: Panama")); 
 
+        int [][] list = ThreeSum(new int[] { -1, 0, 1, 2, -1, -4 }).Select(innerList => innerList.ToArray()).ToArray();
+
+        Console.WriteLine(string.Join(" | ", list.Select(arr => string.Join(",", arr))));
     }
 
 }
