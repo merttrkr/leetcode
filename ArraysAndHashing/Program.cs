@@ -316,7 +316,67 @@ public class Solution
         }
         return result;
     }
+    public static int MaxArea(int[] height)
+    {
+        int left = 0;
+        int right = height.Length - 1;
+        int max = 0;
+       while(left < right)
+        {
+            int x = right - left;
+            int y = height[left] > height[right] ? height[right] : height[left];
+            if (x*y > max)
+            {
+                max = x * y;
+            }
+            if (height[left] > height[right])
+            {
+                right --;
+            }
+            else
+            {
+                left ++;
+            }
+        }
+       return max;
+    }
+    public static int  Trap(int[] height)
+    {
+        int left = 0;
+        int right = height.Length - 1;
+        int maxLeft = 0;
+        int maxRight = 0;
+        int totalWater = 0;
 
+        while (left < right)
+        {
+            if (height[left] < height[right])
+            {
+                if (height[left] >= maxLeft)
+                {
+                    maxLeft = height[left];
+                }
+                else
+                {
+                    totalWater += maxLeft - height[left];
+                }
+                left++;
+            }
+            else
+            {
+                if (height[right] >= maxRight)
+                {
+                    maxRight = height[right];
+                }
+                else
+                {
+                    totalWater += maxRight - height[right];
+                }
+                right--;
+            }
+        }
+        return totalWater;
+    }
     public static void Main(string[] args)
     {
         int[] nums = { 1,2,3,4};
@@ -367,9 +427,11 @@ public class Solution
 
         //Console.WriteLine(IsPalindromeLinq("A man, a plan, a canal: Panama")); 
 
-        int [][] list = ThreeSum(new int[] { -1, 0, 1, 2, -1, -4 }).Select(innerList => innerList.ToArray()).ToArray();
+        //int [][] list = ThreeSum(new int[] { -1, 0, 1, 2, -1, -4 }).Select(innerList => innerList.ToArray()).ToArray();
 
-        Console.WriteLine(string.Join(" | ", list.Select(arr => string.Join(",", arr))));
+        //Console.WriteLine(string.Join(" | ", list.Select(arr => string.Join(",", arr))));
+
+        Console.WriteLine(MaxArea(new int[]{ 1,8,6,2,5,4,8,3,7 }));
     }
 
 }
