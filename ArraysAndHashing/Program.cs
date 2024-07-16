@@ -59,6 +59,28 @@ public class Solution
         // If the dictionary is empty, the strings are anagrams
         return charCount.Count == 0;
     }
+    // compare two string whether they are anagram
+    public static bool AreAnagrams(string str1, string str2)
+    {
+        if (str1.Length != str2.Length)
+            return false;
+
+        int[] freq = new int[26];
+
+        for (int i = 0; i < str1.Length; i++)
+        {
+            freq[str1[i] - 'a']++;
+            freq[str2[i] - 'a']--;
+        }
+
+        foreach (int count in freq)
+        {
+            if (count != 0)
+                return false;
+        }
+
+        return true;
+    }
     public static IList<IList<string>> GroupAnagrams(string[] strs)
     {
         var map = new Dictionary<string, IList<string>>();

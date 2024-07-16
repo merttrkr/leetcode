@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SlidingWindow;
 public class Solution
@@ -82,6 +83,7 @@ public class Solution
 
         return maxLength;
     }
+
     public static int CharacterReplacement(string s, int k)
     {
         int len = s.Length;
@@ -101,6 +103,55 @@ public class Solution
         }
         return maxLength;
     }
+
+    public static bool CheckInclusion(string s1, string s2)
+    {
+        // If s1 is longer than s2, return false
+        if (s1.Length > s2.Length)
+            return false;
+
+        // Create frequency maps for s1 and the first window in s2
+        int[] s1map = new int[26];
+        int[] s2map = new int[26];
+
+        // Fill s1map with frequencies of characters in s1
+        for (int i = 0; i < s1.Length; i++)
+        {
+            s1map[s1[i] - 'a']++;
+            s2map[s2[i] - 'a']++; // Fill the first window of s2map
+        }
+
+        // Check if the first window matches
+        if (Matches(s1map, s2map))
+            return true;
+
+        // Now slide the window over s2
+        for (int i = s1.Length; i < s2.Length; i++)
+        {
+            // Add the next character in s2 to the window
+            s2map[s2[i] - 'a']++;
+            // Remove the character that is sliding out of the window
+            s2map[s2[i - s1.Length] - 'a']--;
+
+            // Check if the updated window matches
+            if (Matches(s1map, s2map))
+                return true;
+        }
+
+        return false;
+    }
+
+    // Helper method to compare frequency maps
+    public static bool Matches(int[] s1map, int[] s2map)
+    {
+        for (int i = 0; i < 26; i++)
+        {
+            if (s1map[i] != s2map[i])
+                return false;
+        }
+        return true;
+    }
+
     public static void Main(string[] args)
     {
         //QueueLengthOfLongestSubstring("asdasda");
@@ -108,6 +159,7 @@ public class Solution
         //QueueAndSetLengthOfLongestSubstring("asdasda");
 
         //HashLengthOfLongestSubstring("asdasda");
-        Console.WriteLine(CharacterReplacement("ABBB", 0));
+        //Console.WriteLine(CharacterReplacement("ABBB", 0));
+        CheckInclusion("ab", "eidboaoo");
     }
 }   
