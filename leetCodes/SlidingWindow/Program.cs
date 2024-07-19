@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
+using System.Text;
 
 namespace SlidingWindow;
 public class Solution
@@ -151,7 +152,56 @@ public class Solution
         }
         return true;
     }
+    /// <summary>
+    ///Explanation: Both 'a's from t must be included in the window.
+    ///Since the largest window of s only has one 'a', return empty string.
+    /// Input: s = "ADOBECODEBANC", t = "ABC"
+    ///Output: "BANC"
+    /// </summary>
+    public static string MinWindow(string s, string t)
+    {
+        if (t.Length>s.Length)
+        {
+            return "";
+        }
+        int[] freq = new int[128];
 
+        for(int i=0; i<t.Length; i++)
+        {
+            freq[t[i]]++;
+        }
+        int left = 0;
+        int right = 0;
+        int requiredChars = t.Length;
+        int minWindow = int.MaxValue;
+        int windowStart = 0;
+
+        while (right < s.Length)
+        {
+            if (freq[s[right]] > 0)
+            {
+                requiredChars--;
+            }
+            freq[s[right]]--;
+            right++;
+            while (requiredChars == 0)
+            {
+                if( minWindow > right-left)
+                {
+                    windowStart = left;
+                    minWindow = right - left;
+                }
+                if (freq[s[left]] == 0)
+                {
+                    requiredChars++;
+                }
+                freq[s[left]]++;
+                left++;
+            }
+        }
+        return minWindow == int.MaxValue ? "" : s.Substring(windowStart, minWindow);
+    }
+    
     public static void Main(string[] args)
     {
         //QueueLengthOfLongestSubstring("asdasda");
@@ -160,6 +210,7 @@ public class Solution
 
         //HashLengthOfLongestSubstring("asdasda");
         //Console.WriteLine(CharacterReplacement("ABBB", 0));
-        CheckInclusion("ab", "eidboaoo");
+        //CheckInclusion("ab", "eidboaoo");
+        Console.WriteLine(MinWindow("ADOBECODEBANC", "ABC"));
     }
 }   
