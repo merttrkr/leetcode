@@ -141,7 +141,6 @@ public class Solution
 
         return false;
     }
-
     // Helper method to compare frequency maps
     public static bool Matches(int[] s1map, int[] s2map)
     {
@@ -152,6 +151,56 @@ public class Solution
         }
         return true;
     }
+    /// <summary>
+    /// Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+    /// </summary>
+    /// <param name="s1">ab</param>
+    /// <param name="s2">eidbaooo</param>
+    /// <returns>true</returns>
+    public static bool CheckInclusionTest(string s1, string s2)
+    {
+        // Create a frequency map for characters in s1
+        int[] charFrequencyMap = new int[26];
+        foreach (char c in s1)
+        {
+            charFrequencyMap[c - 'a']++;
+        }
+
+        // Initialize pointers and necessary variables
+        int left = 0, right = 0;
+        int size = s1.Length;
+        int requiredChars = size;
+        int currentMatchCount = 0;
+        bool stop = false;
+        // Traverse s2 with the right pointer
+        while (right < s2.Length)
+        {
+            if (charFrequencyMap[s2[right] - 'a'] > 0)
+            {
+                currentMatchCount++;
+            }
+            if (currentMatchCount == size)
+            {
+                return true;
+            }
+            charFrequencyMap[s2[right] - 'a']--;
+            right++;
+            while (currentMatchCount>0)
+            {
+                if (charFrequencyMap[s2[left]] > 0)
+                {
+                    currentMatchCount--;
+                }
+                charFrequencyMap[s2[left]]--;
+                left++;
+            }
+        }
+
+        // If no valid window is found, return false
+        return false;
+    }
+
+
     /// <summary>
     ///Explanation: Both 'a's from t must be included in the window.
     ///Since the largest window of s only has one 'a', return empty string.
@@ -201,7 +250,24 @@ public class Solution
         }
         return minWindow == int.MaxValue ? "" : s.Substring(windowStart, minWindow);
     }
-    
+    public static int continuesSum(int[] freq,int target)
+    {
+        int left = 0;
+        int right = 0;
+        int sum = 0;
+        int minCount = int.MaxValue;
+        for (; right < freq.Length; right++)
+        {
+            sum += freq[right];
+            while (sum >= target)
+            {
+                minCount = Math.Min(minCount, right - left+1);
+                sum-= freq[left];
+                left++;
+            }
+        }
+        return sum == 0? -1: minCount ;
+    }
     public static void Main(string[] args)
     {
         //QueueLengthOfLongestSubstring("asdasda");
@@ -210,7 +276,8 @@ public class Solution
 
         //HashLengthOfLongestSubstring("asdasda");
         //Console.WriteLine(CharacterReplacement("ABBB", 0));
-        //CheckInclusion("ab", "eidboaoo");
-        Console.WriteLine(MinWindow("ADOBECODEBANC", "ABC"));
+        //Console.WriteLine(CheckInclusionTest("adce", "asxndcecad"));
+        Console.WriteLine(continuesSum(new int[] { 5, 1, 3, 5, 10, 7, 4 }, 15));
+        //Console.WriteLine(MinWindow("ADOBECODEBANC", "ABC"));
     }
 }   
