@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SlidingWindow;
 public class Solution
@@ -250,7 +252,8 @@ public class Solution
         }
         return minWindow == int.MaxValue ? "" : s.Substring(windowStart, minWindow);
     }
-    public static int continuesSum(int[] freq,int target)
+    
+    public static int ContinuesSum(int[] freq,int target)
     {
         int left = 0;
         int right = 0;
@@ -268,6 +271,8 @@ public class Solution
         }
         return sum == 0? -1: minCount ;
     }
+    
+
     public static void Main(string[] args)
     {
         //QueueLengthOfLongestSubstring("asdasda");
@@ -277,7 +282,7 @@ public class Solution
         //HashLengthOfLongestSubstring("asdasda");
         //Console.WriteLine(CharacterReplacement("ABBB", 0));
         //Console.WriteLine(CheckInclusionTest("adce", "asxndcecad"));
-        Console.WriteLine(continuesSum(new int[] { 5, 1, 3, 5, 10, 7, 4 }, 15));
+        //Console.WriteLine(continuesSum(new int[] { 5, 1, 3, 5, 10, 7, 4 }, 15));
         //Console.WriteLine(MinWindow("ADOBECODEBANC", "ABC"));
     }
 }   
