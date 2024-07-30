@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -62,7 +63,7 @@ public class Solution
 
     public static int HashLengthOfLongestSubstring(string s)
     {
-        HashSet<char> set = new HashSet<char>();
+        HashSet<char> set = new ();
         int maxLength = 0;
         int left = 0; // Pointer for the start of the current substring
 
@@ -271,7 +272,57 @@ public class Solution
         }
         return sum == 0? -1: minCount ;
     }
+
+
+    /// <summary>
+    /// You are given an array of integers nums, 
+    /// there is a sliding window of size k which is moving from the very left of the array to the very right. 
+    /// You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+    ///Return the max integer of each sliding window.
+    ///Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+    ///[1  3  -1] -3  5  3  6  7       3
+    /// 1 [3  -1  -3] 5  3  6  7       3
+    /// 1  3 [-1  -3  5] 3  6  7       5
+    /// 1  3  -1 [-3  5  3] 6  7       5
+    ///Output: [3,3,5,5,6,7]
+    /// </summary>
+
+    public static int[] maxValueOfEachSlidingWindow(int[] nums, int k)
+{
+    // Initialize the result array to store the maximum values for each sliding window
+    int[] result = new int[nums.Length - k + 1];
     
+    // LinkedList to store indices of array elements, which helps in maintaining the current window
+    LinkedList<int> indices = new LinkedList<int>();
+
+    // Iterate over each element in the array
+    for (int left = 0; left < nums.Length; left++)
+    {
+        // Remove indices that are out of the current window
+        if (indices.Count > 0 && indices.First.Value <= left - k)
+        {
+            indices.RemoveFirst();
+        }
+
+        // Remove indices whose corresponding values are less than the current element
+        while (indices.Count > 0 && nums[indices.Last.Value] <= nums[left])
+        {
+            indices.RemoveLast();
+        }
+
+        // Add the current index to the list
+        indices.AddLast(left);
+
+        // Start adding to result once the first window is complete
+        if (left >= k - 1)
+        {
+            result[left - k + 1] = nums[indices.First.Value];
+        }
+    }
+
+    return result;
+}
+
 
     public static void Main(string[] args)
     {
@@ -284,5 +335,8 @@ public class Solution
         //Console.WriteLine(CheckInclusionTest("adce", "asxndcecad"));
         //Console.WriteLine(continuesSum(new int[] { 5, 1, 3, 5, 10, 7, 4 }, 15));
         //Console.WriteLine(MinWindow("ADOBECODEBANC", "ABC"));
+
+        Console.WriteLine(string.Join(", ", maxValueOfEachSlidingWindow(new int[] { 1, 3, -1, -3, 5, 3, 6, 7 }, 3)));
+
     }
 }   

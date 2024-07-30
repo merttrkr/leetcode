@@ -133,4 +133,52 @@ namespace MaxPathSum
             return true;
         }
     }
+    static int n = 4; // Size of the board (N x N)
+    static int count = 0;
+    static bool[] column = new bool[n];
+    static bool[] diag1 = new bool[2 * n];
+    static bool[] diag2 = new bool[2 * n];
+    static int[] queens = new int[n]; // Track the column position of queens in each row
+
+
+
+    static void search(int y)
+    {
+        if (y == n)
+        {
+            count++;
+            PrintBoard();
+            return;
+        }
+
+        for (int x = 0; x < n; x++)
+        {
+            if (column[x] || diag1[x + y] || diag2[x - y + n - 1]) continue;
+            column[x] = diag1[x + y] = diag2[x - y + n - 1] = true;
+            queens[y] = x; // Place the queen
+            search(y + 1);
+            column[x] = diag1[x + y] = diag2[x - y + n - 1] = false;
+        }
+    }
+
+    static void PrintBoard()
+    {
+        Console.WriteLine($"Solution {count}:");
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (queens[i] == j)
+                {
+                    Console.Write("Q ");
+                }
+                else
+                {
+                    Console.Write(". ");
+                }
+            }
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
 }
