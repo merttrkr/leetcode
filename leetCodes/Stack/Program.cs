@@ -139,6 +139,29 @@ public class Solution
         }
 
     }
+    /// <summary>
+    /// Given an array of integers temperatures represents the daily temperatures, return an array answer such that
+    /// answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future
+    /// day for which this is possible, keep answer[i] == 0 instead.
+    /// Input: temperatures = [73,74,75,71]
+    /// Output: [1,1,4,2]
+    /// </summary>
+    public static int[] DailyTemperatures(int[] temperatures)
+    {
+        Stack<int> stack = new Stack<int>();
+        int[]result = new int[temperatures.Length];
+
+        for (int i = 0; i < temperatures.Length; i++) 
+        {
+            while (stack.Count > 0 && temperatures[stack.Peek()] < temperatures[i])
+            {
+                int index = stack.Pop();
+                result[index] = i - index;
+            }
+            stack.Push(i);
+        }
+        return result;
+    }
     public static void Main()
     {
         //MinStack minStack = new MinStack();
@@ -149,6 +172,7 @@ public class Solution
         //minStack.Top();    // return 0
         //minStack.Pop();
         //minStack.GetMin(); // return -2
-        Console.WriteLine(string.Join(",",GenerateParenthesis(2)));
+        //Console.WriteLine(string.Join(",",GenerateParenthesis(2)));
+        Console.WriteLine(string.Join(",",DailyTemperatures(new int[] {73,74,75,71,69,72,76,73})));
     }
 }
