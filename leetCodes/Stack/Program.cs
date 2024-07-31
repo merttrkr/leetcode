@@ -115,15 +115,40 @@ public class Solution
 
         return stack.Pop();
     }
-        public static void Main()
+    public static IList<string> GenerateParenthesis(int n)
     {
-        MinStack minStack = new MinStack();
-        minStack.Push(-2);
-        minStack.Push(0);
-        minStack.Push(-1);
-        minStack.GetMin(); // return -3
-        minStack.Top();    // return 0
-        minStack.Pop();
-        minStack.GetMin(); // return -2
+        IList<string> result = new List<string>();
+        BackTrackParanthesis(result,n,"",0,0);
+        return result;
+    }
+    public static void BackTrackParanthesis(IList<string> result,int max,string current,int open,int closed )
+    {
+
+        if(current.Length == max*2)
+        {
+            result.Add(current);
+            return;
+        }
+        if(open < max)
+        {
+            BackTrackParanthesis(result,max,current+"(",open+1,closed);
+        }
+        if(closed < open)
+        {
+            BackTrackParanthesis(result,max,current+")",open,closed+1);
+        }
+
+    }
+    public static void Main()
+    {
+        //MinStack minStack = new MinStack();
+        //minStack.Push(-2);
+        //minStack.Push(0);
+        //minStack.Push(-1);
+        //minStack.GetMin(); // return -3
+        //minStack.Top();    // return 0
+        //minStack.Pop();
+        //minStack.GetMin(); // return -2
+        Console.WriteLine(string.Join(",",GenerateParenthesis(2)));
     }
 }
