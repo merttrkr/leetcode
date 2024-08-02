@@ -162,6 +162,22 @@ public class Solution
         }
         return result;
     }
+
+    public int CarFleet(int target, int[] position, int[] speed)
+    {
+        Stack<double> fleetTimings = new();
+        Array.Sort(position, speed);
+        for (int i = position.Length - 1; i >= 0; i--)
+        {
+            double newTiming = (target - position[i]) / (double)speed[i];
+            if (!fleetTimings.Any() || fleetTimings.Peek() < newTiming)
+            {
+                fleetTimings.Push(newTiming);
+            }
+        }
+        return fleetTimings.Count;
+    }
+
     public static void Main()
     {
         //MinStack minStack = new MinStack();
@@ -173,6 +189,7 @@ public class Solution
         //minStack.Pop();
         //minStack.GetMin(); // return -2
         //Console.WriteLine(string.Join(",",GenerateParenthesis(2)));
-        Console.WriteLine(string.Join(",",DailyTemperatures(new int[] {73,74,75,71,69,72,76,73})));
+        //Console.WriteLine(string.Join(",",DailyTemperatures(new int[] {73,74,75,71,69,72,76,73})));
+        //Console.WriteLine(CanBecomeFleet(5,3,12,1,3));
     }
 }
