@@ -1,6 +1,4 @@
 ﻿//Console.WriteLine(Search(new int[] { -1, 0, 3, 5, 9, 12 }, 9));
-using System.Reflection;
-
 int Search(int[] nums, int target)
 {
     int right = nums.Length - 1;
@@ -38,6 +36,7 @@ int Search(int[] nums, int target)
 //            new int[] {23, 30, 34, 60}
 //        };
 //SearchMatrix( matrix,3);
+
 bool SearchMatrix(int[][] matrix, int target)
 {
     int rows = matrix.Length;
@@ -49,7 +48,7 @@ bool SearchMatrix(int[][] matrix, int target)
     while (left <= right)
     {
         int middle = (left + right) / 2;
-        int row = middle / cols;   // Corrected: Use 'cols' instead of 'rows'
+        int row = middle / cols;
         int col = middle % cols;
 
         if (matrix[row][col] == target)
@@ -66,4 +65,62 @@ bool SearchMatrix(int[][] matrix, int target)
         }
     }
     return false;
+}
+
+//Console.WriteLine(MySqrt(8));
+int MySqrt(int x)
+{
+    if (x == 0 || x == 1) return x;
+    int left = 0;
+    int right = x;
+    while (left < right)
+    {
+        int mid = left + (right - left) / 2;
+        int cur = x / mid;
+        if (mid <= cur)
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    return left - 1;
+}
+Console.WriteLine(MinEatingSpeed(new int[] { 2, 2 },4));
+int MinEatingSpeed(int[] piles, int h)
+{
+    if (piles.Length == 0)
+        return 0;
+
+    if (piles.Length == 1 && piles[0] <= h)
+        return 1;
+
+    int left = 0;
+    int right = piles.Max();
+    while (left < right)
+    {
+        int mid = left + (right - left) / 2;
+        if (CanEat(h, piles, mid))
+        {
+            right = mid;
+        }
+        else
+        {
+            left = mid + 1;
+        }
+    }
+    return right;
+}
+
+ bool CanEat(int h, int[] piles, int speed)
+{
+    int totalSpend = 0;
+    foreach (int pile in piles)
+    {
+        totalSpend += (int)Math.Ceiling((double)pile / speed);
+        if (totalSpend > h) return false;
+    }
+    return h >= totalSpend;
 }
