@@ -189,7 +189,7 @@ int FindMin(int[] nums)
     }
     return nums[left];
 }
-Console.WriteLine(SearchCircle(new int[] { 1, 3 },3));
+//Console.WriteLine(SearchCircle(new int[] { 1, 3 },3));
 int SearchCircle(int[] nums, int target)
 {
     int left = 0;
@@ -229,3 +229,72 @@ int SearchCircle(int[] nums, int target)
     }
     return -1;
 }
+
+public class TimeMap
+{
+    private readonly Dictionary<string, List<(int timestamp, string value)>> _map;
+    public TimeMap()
+    {
+        _map = new Dictionary<string, List<(int timestamp, string value)>>();
+    }
+
+    public void Set(string key, string value, int timestamp)
+    {
+        if (!_map.ContainsKey(key))
+        {
+            _map[key] = new List<(int timestamp, string value)>();
+        }
+        _map[key].Add((timestamp, value));
+    }
+
+    public string Get(string key, int timestamp)
+    {
+        if (_map.TryGetValue(key, out var searchList))
+        {
+            var result = BinarySearch(searchList, timestamp);
+            return result.value;
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+    private (int timestamp,string value) BinarySearch(List<(int timestamp,string value)> list,int target)
+    {
+        int left = 1;
+        int right = list.Count-1;
+
+        while (left <= right)
+        {
+            int mid = left + (right - left)/2;
+            if (list[mid].timestamp == target)
+            {
+                return list[mid];
+            }
+            if (list[mid].timestamp > target)
+            {
+                right = mid-1;
+            }
+            else
+            {
+                left = mid+1;
+            }
+        }
+        return right >= 0 ? list[right] : (0, string.Empty);
+    }
+
+
+
+}
+
+
+
+
+
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap obj = new TimeMap();
+ * obj.Set(key,value,timestamp);
+ * string param_2 = obj.Get(key,timestamp);
+ */
