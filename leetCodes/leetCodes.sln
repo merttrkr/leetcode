@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "challanges", "challanges\ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stack", "Stack\Stack.csproj", "{2F2ACF13-D9F0-430E-B176-FAC1FBDF939B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch", "BinarySearch\BinarySearch.csproj", "{F1EBE9CD-321E-4FEF-96D8-F17C016F01BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinarySearch", "BinarySearch\BinarySearch.csproj", "{F1EBE9CD-321E-4FEF-96D8-F17C016F01BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedList", "LinkedList\LinkedList.csproj", "{F3AF1E4E-A5FC-441E-AC66-0121F4DD5AA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{F1EBE9CD-321E-4FEF-96D8-F17C016F01BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1EBE9CD-321E-4FEF-96D8-F17C016F01BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1EBE9CD-321E-4FEF-96D8-F17C016F01BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3AF1E4E-A5FC-441E-AC66-0121F4DD5AA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3AF1E4E-A5FC-441E-AC66-0121F4DD5AA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3AF1E4E-A5FC-441E-AC66-0121F4DD5AA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3AF1E4E-A5FC-441E-AC66-0121F4DD5AA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
