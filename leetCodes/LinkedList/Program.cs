@@ -1,4 +1,6 @@
-﻿public class ReverseLinkedListRecursive
+﻿using System.Diagnostics.Metrics;
+
+public class ReverseLinkedListRecursive
 {
 
     /* Link list node */
@@ -162,21 +164,36 @@
         current.next = null;
 
     }
-    
 
-        // Driver code
-        public static void Main(String[] args)
+    /// <summary>
+    /// Given the head of a linked list, remove the nth node from the end of the list and return its head.
+    /// 1 2 3 4 5
+    /// </summary>
+    public static Node RemoveNthFromEnd(Node head, int n)
+    {
+        Node fast = head, slow = head;
+        for (int i = 0; i < n; i++) fast = fast.next;
+        if (fast == null) return head.next;
+        while (fast.next != null)
+        {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return head;
+    }
+    // Driver code
+    public static void Main(String[] args)
     {
         LinkedList llist = new LinkedList();
         LinkedList llist2 = new LinkedList();
 
-        llist.insertNode(1);
-        llist.insertNode(2);
-        llist.insertNode(3);
-        llist.insertNode(4);
         llist.insertNode(5);
-        llist.insertNode(6);
-        llist.insertNode(7);
+        llist.insertNode(4);
+        llist.insertNode(3);
+        llist.insertNode(2);
+        llist.insertNode(1);
+
 
         llist2.insertNode(1);
         llist2.insertNode(4);
@@ -187,9 +204,10 @@
         printSinglyLinkedList(llist.head, " ");
 
         Console.WriteLine();
-        Console.WriteLine("Reversed Linked list:");
-        Node llist1 = reverseIterative(llist.head);
-        Node llist3 = reverse(llist2.head);
+        //Console.WriteLine("Reversed Linked list:");
+        //Node llist1 = reverseIterative(llist.head);
+        //Node llist3 = reverse(llist2.head);
+        Node llist1 = RemoveNthFromEnd(llist.head,2);
         printSinglyLinkedList(llist1, " ");
 
         //printSinglyLinkedList(MergeTwoLists(llist1, llist3), " ");
